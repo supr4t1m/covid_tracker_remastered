@@ -104,19 +104,20 @@ img {
 
 body > .container {
     position: relative;
-    min-height: calc(100lvh - 6rem);
+    min-height: calc(100lvh - 6.12rem);
 }
 
 .main__container {
     margin-inline: 2rem;
+    padding-block-end: 1em;
 }
 
 .main {
     margin-inline: auto;
     background-color: var(--bg-blue-90-alpha-30);
     max-width: 960px;
-    min-height: 75lvh;
-    margin: 3rem auto 0;
+    min-height: 70lvh;
+    margin: 3rem auto 4rem;
     /* TODO: remove placeholder after adding map */
     text-align: center;
     padding-top: 2em;
