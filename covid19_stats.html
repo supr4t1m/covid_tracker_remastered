@@ -1,11 +1,13 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="covid19_stats_styles.css">
     <title>Statistics for Covid19 India</title>
 </head>
+
 <body>
     <header class="page-header">
         <div class="container">
@@ -17,8 +19,18 @@
                     <button class="button main-menu__toggle">Toggle</button>
                     <ul class="main-menu__dropdown">
                         <li class="main-menu__item">
-                            <a href="/covid19_about_us.html">
+                            <a href="#" class="main-menu__item">
                                 About Us
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#" class="main-menu__item">
+                                Contact Us
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#" class="main-menu__item">
+                                Useful links
                             </a>
                         </li>
                     </ul>
@@ -27,23 +39,90 @@
         </div>
     </header>
     <div class="container">
+        <div class="sidebar__container">
+            <aside class="sidebar">
+                <div class="dropdown">
+                    <button class="button dropdown__button">States</button>
+                    <ul class="dropdown__menu">
+                        <li>India</li>
+                        <li>Andaman and Nicobar Islands</li>
+                        <li>Andhra Pradesh</li>
+                        <li>Arunachal Pradesh</li>
+                        <li>Assam</li>
+                        <li>Bihar</li>
+                        <li>Chandigarh</li>
+                        <li>Chhattisgarh</li>
+                        <li>Dadra and Nagar Haveli and Daman and Diu</li>
+                        <li>Delhi</li>
+                        <li>Goa</li>
+                        <li>Gujarat</li>
+                        <li>Haryana</li>
+                        <li>Himachal Pradesh</li>
+                        <li>Jammu and Kashmir</li>
+                        <li>Jharkhand</li>
+                        <li>Karnataka</li>
+                        <li>Kerala</li>
+                        <li>Ladakh</li>
+                        <li>Lakshadweep</li>
+                        <li>Madhya Pradesh</li>
+                        <li>Maharastra</li>
+                        <li>Manipur</li>
+                        <li>Meghalaya</li>
+                        <li>Mizoram</li>
+                        <li>Nagaland</li>
+                        <li>Odisha</li>
+                        <li>Puducherry</li>
+                        <li>Punjab</li>
+                        <li>Rajasthan</li>
+                        <li>Sikkim</li>
+                        <li>Tamil Nadu</li>
+                        <li>Telangana</li>
+                        <li>Tripura</li>
+                        <li>Uttar Pradesh</li>
+                        <li>Uttarakhand</li>
+                        <li>West Bengal</li>
+                    </ul>
+                </div>
+                <div class="dropdown">
+                    <button class="button dropdown__button">Category</button>
+                    <ul class="dropdown__menu">
+                        <li>Confirmed</li>
+                        <li>Active</li>
+                        <li>Recovered</li>
+                        <li>Deceased</li>
+                    </ul>
+                </div>
+            </aside>
+        </div>
         <div class="main__container">
             <main class="main">
                 Map Placeholder
             </main>
         </div>
         <footer>
-            Made with Insomnia at AGARTALA by Gintama Fans! 
+            Made with Insomnia at AGARTALA by Gintama Fans!
         </footer>
     </div>
     <script type="module">
         var toggle = document.getElementsByClassName("main-menu__toggle")[0];
         var menu = document.getElementsByClassName("main-menu")[0];
 
-        toggle.addEventListener("click", function(event) {
+        toggle.addEventListener("click", function (event) {
             event.preventDefault();
             menu.classList.toggle("is-open");
         });
     </script>
+    <script type="module">
+        var dropdowns = document.getElementsByClassName("dropdown");
+        var buttons = document.getElementsByClassName("dropdown__button");
+
+        for (let i=0; i<dropdowns.length; i++) {
+            buttons[i].addEventListener("click", function(event) {
+                event.preventDefault();
+                dropdowns[i].classList.toggle("is-open");
+            });
+        }
+    </script>
 </body>
+
 </html>
