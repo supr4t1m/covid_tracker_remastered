@@ -15,7 +15,8 @@ body {
     font-family: Helvetica, Arial, sans-serif;
 }
 
-img {
+img,
+svg {
     display: block;
     max-width: 100%;
 }
@@ -108,9 +109,14 @@ img {
     text-indent: initial;
 }
 
+.main-menu.is-open .main-menu__toggle::after {
+    color: white;
+}
+
 body > .container {
     position: relative;
     min-height: calc(100lvh - 4rem);
+    padding-block-end: 5em;
 }
 
 .sidebar__container {
@@ -170,13 +176,18 @@ body > .container {
     padding: 0.8em 1.2em;
 }
 
+.dropdown__menu li:hover {
+    color: white;
+    background-color: var(--bg-blue-70);
+    transition: background-color 200ms linear;
+}
+
 .dropdown__menu > li + li {
     border-top: 1px solid var(--bg-blue-70);
 }
 
 .main__container {
     margin-inline: 3rem;
-    padding-block-end: 5em;
 }
 
 @media (orientation: landscape) {
@@ -189,11 +200,12 @@ body > .container {
     margin-inline: auto;
     background-color: var(--bg-blue-90-alpha-30);
     max-width: 960px;
-    min-height: min(70svw, 960px);
     margin: 2rem auto;
-    /* TODO: remove placeholder after adding map */
-    text-align: center;
-    padding-top: 2em;
+}
+
+.map {
+    height: 100%;
+    min-height: min(70svw, 960px);
 }
 
 footer {
