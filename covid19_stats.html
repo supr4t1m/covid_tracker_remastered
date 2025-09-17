@@ -43,44 +43,7 @@
             <aside class="sidebar">
                 <div class="dropdown">
                     <button class="button dropdown__button">States</button>
-                    <ul class="dropdown__menu">
-                        <li>India</li>
-                        <li>Andaman and Nicobar Islands</li>
-                        <li>Andhra Pradesh</li>
-                        <li>Arunachal Pradesh</li>
-                        <li>Assam</li>
-                        <li>Bihar</li>
-                        <li>Chandigarh</li>
-                        <li>Chhattisgarh</li>
-                        <li>Dadra and Nagar Haveli and Daman and Diu</li>
-                        <li>Delhi</li>
-                        <li>Goa</li>
-                        <li>Gujarat</li>
-                        <li>Haryana</li>
-                        <li>Himachal Pradesh</li>
-                        <li>Jammu and Kashmir</li>
-                        <li>Jharkhand</li>
-                        <li>Karnataka</li>
-                        <li>Kerala</li>
-                        <li>Ladakh</li>
-                        <li>Lakshadweep</li>
-                        <li>Madhya Pradesh</li>
-                        <li>Maharastra</li>
-                        <li>Manipur</li>
-                        <li>Meghalaya</li>
-                        <li>Mizoram</li>
-                        <li>Nagaland</li>
-                        <li>Odisha</li>
-                        <li>Puducherry</li>
-                        <li>Punjab</li>
-                        <li>Rajasthan</li>
-                        <li>Sikkim</li>
-                        <li>Tamil Nadu</li>
-                        <li>Telangana</li>
-                        <li>Tripura</li>
-                        <li>Uttar Pradesh</li>
-                        <li>Uttarakhand</li>
-                        <li>West Bengal</li>
+                    <ul class="dropdown__menu" id="states_dropdown">
                     </ul>
                 </div>
                 <div class="dropdown">
@@ -103,6 +66,18 @@
             Made with Insomnia at AGARTALA by Gintama Fans!
         </footer>
     </div>
+    <script type="module">
+        import { STATE_NAMES } from './scripts/constants.js';
+
+        let states_dropdown = document.getElementById("states_dropdown");
+        
+        Object.entries(STATE_NAMES).forEach(([code, name]) => {
+            let listItem = document.createElement("li");
+            listItem.setAttribute("data-stcode", code);
+            listItem.textContent = name;
+            states_dropdown.appendChild(listItem);
+        });
+    </script>
     <script>
         let toggle = document.getElementsByClassName("main-menu__toggle")[0];
         let menu = document.getElementsByClassName("main-menu")[0];
@@ -132,7 +107,7 @@
     </script>
     <script src="scripts/d3.v7.min.js"></script>
     <script src="scripts/topojson.js"></script>
-    <script src="scripts/visualize.js"></script>
+    <script type="module" src="scripts/visualize.js"></script>
 </body>
 
 </html>

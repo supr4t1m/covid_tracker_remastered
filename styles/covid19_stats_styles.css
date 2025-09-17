@@ -138,7 +138,7 @@ body > .container {
     padding-inline-start: unset;
     margin: unset;
     max-height: 20em;
-    overflow-y: scroll;
+    overflow-y: auto;
     background-color: var(--bg-blue-90);
     border: 1px solid var(--bg-blue-70);
 }
@@ -198,7 +198,6 @@ body > .container {
 
 .main {
     margin-inline: auto;
-    background-color: var(--bg-blue-90-alpha-30);
     max-width: 960px;
     margin: 2rem auto;
 }
@@ -206,6 +205,8 @@ body > .container {
 .map {
     height: 100%;
     min-height: min(70svw, 960px);
+    box-shadow: 0 0 5px rgb(0 0 0 / 50%);
+    border-radius: 0.3em;
 }
 
 footer {
