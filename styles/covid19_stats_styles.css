@@ -186,6 +186,11 @@ body > .container {
     border-top: 1px solid var(--bg-blue-70);
 }
 
+.dropdown__menu > li.dropdown__item-selected {
+    color: white;
+    background-color: var(--bg-blue-70);
+}
+
 .main__container {
     margin-inline: 3rem;
 }

@@ -46,13 +46,13 @@
                     <ul class="dropdown__menu" id="states_dropdown">
                     </ul>
                 </div>
-                <div class="dropdown">
+                <div id="category_dropdown" class="dropdown">
                     <button class="button dropdown__button">Category</button>
                     <ul class="dropdown__menu">
-                        <li>Confirmed</li>
-                        <li>Active</li>
-                        <li>Recovered</li>
-                        <li>Deceased</li>
+                        <li class="dropdown__item-selected" data-category="confirmed">Confirmed</li>
+                        <li data-category="active">Active</li>
+                        <li data-category="recovered">Recovered</li>
+                        <li data-category="deceased">Deceased</li>
                     </ul>
                 </div>
             </aside>
@@ -75,6 +75,7 @@
             let listItem = document.createElement("li");
             listItem.setAttribute("data-stcode", code);
             listItem.textContent = name;
+            if (code == "TT") listItem.classList.add("dropdown__item-selected");
             states_dropdown.appendChild(listItem);
         });
     </script>
@@ -87,7 +88,7 @@
             menu.classList.toggle("is-open");
         });
     </script>
-    <script>
+    <script type="module">
         let dropdowns = document.getElementsByClassName("dropdown");
         let buttons = document.getElementsByClassName("dropdown__button");
         let menus = document.getElementsByClassName("dropdown__menu");
@@ -98,11 +99,19 @@
                 dropdowns[i].classList.toggle("is-open");
             });
 
-            for (let j=0; j<menus[i].children.length; j++)
+            for (let j=0; j<menus[i].children.length; j++) {
                 menus[i].children[j].addEventListener("click", function(event) {
                     event.preventDefault();
                     dropdowns[i].classList.toggle("is-open");
-            });
+                    menus[i].getElementsByClassName("dropdown__item-selected")[0].classList.toggle("dropdown__item-selected");
+                    menus[i].children[j].classList.toggle("dropdown__item-selected");
+                    buttons[i].textContent = menus[i].children[j].textContent;
+                });
+
+                if (menus[i].children[j].classList.contains("dropdown__item-selected")) {
+                    buttons[i].textContent = menus[i].children[j].textContent;
+                }
+            }
         }
     </script>
     <script src="scripts/d3.v7.min.js"></script>

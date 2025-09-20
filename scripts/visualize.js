@@ -8,6 +8,7 @@ const { select,
         geoPath,
         geoCentroid,
         scaleSqrt,
+        scaleOrdinal,
         max
  } = d3;
 
@@ -28,6 +29,10 @@ const pathGenerator = geoPath(projection);
 const sizeScale = scaleSqrt()
                     .range([0, Math.min(width, height)/20]);
 
+const colorScale = scaleOrdinal()
+    .domain(["confirmed", "active", "recovered", "deceased"])
+    .range(['#ff073a', '#007bff', '#28a745', '#6c757d']);
+
 let states = {};
 let covid_data = {};
 
@@ -44,7 +49,7 @@ Promise.all([
         covid_data[st_code].active -= covid_data.other?data.other:0;
     });
 
-    states = topojson.feature(country, country.objects.states);
+    states = feature(country, country.objects.states);
 
     // the changes must w.r.t. unit scale and origin
     projection.scale(1).translate([0, 0]);
@@ -76,13 +81,36 @@ Promise.all([
      .attr('d', pathGenerator)
      .attr('class', 'state')
      .attr('fill', 'transparent')
-     .attr('stroke', 'rgb(0, 0, 0)');
+     .attr('stroke', colorScale('confirmed'));
 
     fillCircles({ covid_data: covid_data, 
         category: 'confirmed',
         sizeScale: sizeScale,
+        colorScale: colorScale,
         selection: g,
         features: states.features});
+
+    const categoryItem = document.querySelectorAll("#category_dropdown li");
+
+    const circles = g.selectAll('circle').data(states.features);
+    
+    for (let item of categoryItem) {
+        item.addEventListener("click", function(event) {
+            event.preventDefault();
+            
+            let category = item.getAttribute('data-category');
+
+            select('svg.map > g').selectAll('path')
+                .attr('stroke', colorScale(category));
+
+            circles
+                .attr('fill', colorScale(category))
+                .attr('stroke', colorScale(category))
+                .transition()
+                .duration(750)
+                .attr('r', d => sizeScale(covid_data[STATE_CODES[d.id]][category]));
+        });
+    }
 
      // here comes the observer API
      new ResizeObserver(entries => {

@@ -6,6 +6,7 @@ const { max } = d3;
 export function fillCircles({covid_data, 
                             category, 
                             sizeScale, 
+                            colorScale,
                             selection,
                             features}) {
     sizeScale.domain([0, max(Object.entries(covid_data), 
@@ -22,8 +23,9 @@ export function fillCircles({covid_data,
         .attr('data-category', category)
         .attr('cx', d => d.properties.centroid[0])
         .attr('cy', d => d.properties.centroid[1])
+        .attr('fill', colorScale(category))
+        .attr('stroke', colorScale(category))
+        .attr('opacity', 0.3)
         .transition().duration(750)
-        .attr('r', d => sizeScale(covid_data[STATE_CODES[d.id]][category]))
-        .attr('fill', 'rgb(0 0 0 / 5%)')
-        .attr('stroke', 'black');
+        .attr('r', d => sizeScale(covid_data[STATE_CODES[d.id]][category]));
 }
