@@ -6,6 +6,7 @@
 
 :root {
     --bg-blue-90: oklch(95% 0.022 260deg);
+    --bg-blue-91: oklch(91% 0.018 260deg);
     --bg-blue-70: oklch(70% 0.08 260deg);
     --bg-blue-90-alpha-30: oklch(95% 0.022 222deg / 0.3);
 }
@@ -113,15 +114,61 @@ svg {
     color: white;
 }
 
+@media (min-width: 768px) {
+    .main-menu__toggle {
+        display: none;
+    }
+
+    .main-menu__dropdown {
+        display: flex;
+        gap: 1em;
+        border: unset;
+        margin: 0.5em;
+    }
+
+    .main-menu__dropdown > li + li {
+        border-top: transparent;
+    }
+
+    .main-menu__dropdown > li > a {
+        background-color: var(--bg-blue-91);
+        border-radius: 0.2em;
+    }
+}
+
 body > .container {
     position: relative;
     min-height: calc(100lvh - 4rem);
     padding-block-end: 5em;
 }
 
+.grid-container {
+    display: block;
+}
+
+@media (min-width: 768px) {
+    .grid-container {
+        display: grid;
+        grid-template-columns: 300px 1fr;
+    }
+}
+
 .sidebar__container {
-    max-width: min(30em, 80svw);
+    /* max-width: min(30em, 80svw); */
+    max-width: max(17em, 30svw);
     margin: 2em auto;
+}
+
+@media (min-width: 768px) {
+    .sidebar__container {
+        margin: unset;
+        max-width: unset;
+    }
+
+    .sidebar {
+        width: 80%;
+        margin-inline: auto;
+    }
 }
 
 .dropdown {
@@ -195,11 +242,17 @@ body > .container {
     margin-inline: 3rem;
 }
 
-@media (orientation: landscape) {
+@media (min-width: 768px) {
+    .main__container {
+        margin-inline-start: unset;
+    }
+}
+
+/* @media (orientation: landscape) {
     .main__container {
         margin-inline: 8rem;
     }
-}
+} */
 
 .main {
     margin-inline: auto;

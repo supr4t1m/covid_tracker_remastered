@@ -43,10 +43,10 @@ Promise.all([
 
     Object.entries(raw_data).forEach(([st_code, st_data], i) => {
         covid_data[st_code] = st_data.total;
-        covid_data[st_code].active = covid_data.confirmed?data.confirmed:0;
-        covid_data[st_code].active -= covid_data.recovered?data.recovered:0;
-        covid_data[st_code].active -= covid_data.deceased?data.deceased:0;
-        covid_data[st_code].active -= covid_data.other?data.other:0;
+        covid_data[st_code].active = covid_data[st_code].confirmed?covid_data[st_code].confirmed:0;
+        covid_data[st_code].active -= covid_data[st_code].recovered?covid_data[st_code].recovered:0;
+        covid_data[st_code].active -= covid_data[st_code].deceased?covid_data[st_code].deceased:0;
+        covid_data[st_code].active -= covid_data[st_code].other?covid_data[st_code].other:0;
     });
 
     states = feature(country, country.objects.states);
@@ -97,13 +97,18 @@ Promise.all([
     for (let item of categoryItem) {
         item.addEventListener("click", function(event) {
             event.preventDefault();
-            
-            let category = item.getAttribute('data-category');
 
+            let category = item.getAttribute('data-category');
+            
+            sizeScale.domain([0, max(Object.entries(covid_data), 
+                d => d[0]!='TT'?d[1][category]:0)])
+                .nice();
+            
             select('svg.map > g').selectAll('path')
                 .attr('stroke', colorScale(category));
 
             circles
+                .attr('data-category', category)
                 .attr('fill', colorScale(category))
                 .attr('stroke', colorScale(category))
                 .transition()

@@ -25,7 +25,7 @@ export function fillCircles({covid_data,
         .attr('cy', d => d.properties.centroid[1])
         .attr('fill', colorScale(category))
         .attr('stroke', colorScale(category))
-        .attr('opacity', 0.3)
+        .attr('opacity', 0.2)
         .transition().duration(750)
         .attr('r', d => sizeScale(covid_data[STATE_CODES[d.id]][category]));
 }
