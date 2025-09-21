@@ -18,7 +18,7 @@
                 <div class="main-menu__drawer">
                     <button class="button main-menu__toggle">Toggle</button>
                     <ul class="main-menu__dropdown">
-                        <li class="main-menu__item">
+                        <li>
                             <a href="#" class="main-menu__item">
                                 About Us
                             </a>
@@ -82,11 +82,19 @@
     <script>
         let toggle = document.getElementsByClassName("main-menu__toggle")[0];
         let menu = document.getElementsByClassName("main-menu")[0];
+        let menuItems = document.querySelectorAll(".main-menu__dropdown > li");
 
         toggle.addEventListener("click", function (event) {
             event.preventDefault();
             menu.classList.toggle("is-open");
         });
+
+        for (let item of menuItems) {
+            item.addEventListener("click", function(event) {
+                event.preventDefault();
+                menu.classList.remove("is-open");
+            });
+        }
     </script>
     <script type="module">
         let dropdowns = document.getElementsByClassName("dropdown");
