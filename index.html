@@ -55,6 +55,13 @@
                         <li data-category="deceased">Deceased</li>
                     </ul>
                 </div>
+                <div class="data-card">
+                    <h4 class="data-card__header"></h4>
+                    <div class="data-card__body">
+                        <h5></h5>
+                        <h1></h1>
+                    </div>
+                </div>
             </aside>
         </div>
         <div class="main__container">
@@ -67,7 +74,9 @@
         </footer>
     </div>
     <script type="module">
+        import { covid_data } from './scripts/visualize.js';
         import { STATE_NAMES } from './scripts/constants.js';
+        import { animatedNumber } from './scripts/drawingUtil.js';
 
         let states_dropdown = document.getElementById("states_dropdown");
         
@@ -76,6 +85,24 @@
             listItem.setAttribute("data-stcode", code);
             listItem.textContent = name;
             if (code == "TT") listItem.classList.add("dropdown__item-selected");
+            listItem.addEventListener("click", function(event) {
+                event.preventDefault();
+                let cardHeader = document.querySelector('.data-card__header');
+                let cardSubheader = document.querySelector('.data-card__body > h5');
+                let cardNum = document.querySelector('.data-card__body > h1');
+
+                let selectedCategory = document.querySelector('#category_dropdown .dropdown__item-selected');
+
+                let target = covid_data[this.dataset.stcode]
+                                            [selectedCategory.dataset.category];
+
+                cardHeader.textContent = selectedCategory.textContent;
+                cardSubheader.textContent = this.textContent;
+
+                (async () => {
+                    animatedNumber(cardNum, 450, target);
+                })();
+            });
             states_dropdown.appendChild(listItem);
         });
     </script>

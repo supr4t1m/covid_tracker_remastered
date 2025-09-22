@@ -238,6 +238,26 @@ body > .container {
     background-color: var(--bg-blue-70);
 }
 
+.data-card {
+    margin-block: 2em;
+    text-align: center;
+    padding-block-end: 1em;
+    border-radius: 0.5em;
+}
+
+.data-card__header {
+    padding-block: 1em;
+    border-bottom: 1px solid rgb(0 0 0 / 10%);
+}
+
+.data-card__body > h5 {
+    padding-inline: 1em;
+}
+
+.data-card__body > h1 {
+    margin-block-end: unset;
+}
+
 .main__container {
     margin-inline: 3rem;
 }

@@ -1,6 +1,7 @@
 import { STATE_NAMES, 
         STATE_CODES } from './constants.js' 
-import { fillCircles } from './drawingUtil.js';
+import { fillCircles,
+         animatedNumber } from './drawingUtil.js';
 
 const { select,
         json,
@@ -34,7 +35,7 @@ const colorScale = scaleOrdinal()
     .range(['#ff073a', '#007bff', '#28a745', '#6c757d']);
 
 let states = {};
-let covid_data = {};
+export let covid_data = {};
 
 Promise.all([
     json('static/india.json'),
@@ -93,12 +94,45 @@ Promise.all([
     const categoryItem = document.querySelectorAll("#category_dropdown li");
 
     const circles = g.selectAll('circle').data(states.features);
+
+
+    
+    let card = document.querySelector('.data-card');
+    let cardHeader = document.querySelector('.data-card__header');
+    let cardSubheader = document.querySelector('.data-card__body > h5');
+    let cardNum = document.querySelector('.data-card__body > h1');
+
+    let selectedState = document.querySelector('#states_dropdown .dropdown__item-selected');
+    let selectedCategory = document.querySelector('#category_dropdown .dropdown__item-selected');
+
+    let target = covid_data[selectedState.dataset.stcode]['confirmed'];
+
+    card.style.backgroundColor = colorScale(selectedCategory.dataset.category) + '1A';
+
+    cardSubheader.textContent = selectedState.textContent;
+    cardHeader.textContent = selectedCategory.textContent;
+
+    (async () => {
+        animatedNumber(cardNum, 450, target);
+    })();
     
     for (let item of categoryItem) {
         item.addEventListener("click", function(event) {
             event.preventDefault();
 
-            let category = item.getAttribute('data-category');
+            let category = this.dataset.category;
+
+            let selectedState = document.querySelector('#states_dropdown .dropdown__item-selected');
+            
+            let target = covid_data[selectedState.dataset.stcode][category];
+
+            card.style.backgroundColor = colorScale(category) + '1A';
+            cardHeader.textContent = this.textContent;
+
+            // animate the card number
+            (async () => {
+                animatedNumber(cardNum, 450, target);
+            })();
             
             sizeScale.domain([0, max(Object.entries(covid_data), 
                 d => d[0]!='TT'?d[1][category]:0)])

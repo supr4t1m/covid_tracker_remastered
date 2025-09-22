@@ -29,3 +29,34 @@ export function fillCircles({covid_data,
         .transition().duration(750)
         .attr('r', d => sizeScale(covid_data[STATE_CODES[d.id]][category]));
 }
+
+// animation utilities
+const timingFunctions = {
+    linear: t => t,
+    inOutQuad: t => t < 0.5 ? 2*t*t : -1+(4-2*t)*t
+}
+
+export const animatedNumber = (element, duration=500, target) => {
+
+    const start = parseInt(element.textContent) || 0;
+    const end = parseInt(target);
+
+    if (start == end) return;
+
+    const range = end - start;
+    let curr = start;
+
+    requestAnimationFrame((startTime) => {
+        const animationLoop = (prevTimestamp) => {
+            let elaps = prevTimestamp - startTime;
+            if (elaps > duration) elaps = duration;
+            const norm = timingFunctions.inOutQuad( elaps / duration );
+            const step = norm * range; 
+            curr = start + step;
+            element.textContent = Math.trunc(curr).toLocaleString();
+            if (elaps < duration) requestAnimationFrame(animationLoop);
+        }
+
+        requestAnimationFrame(animationLoop);
+    });
+}
