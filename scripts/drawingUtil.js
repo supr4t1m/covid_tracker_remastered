@@ -38,7 +38,7 @@ const timingFunctions = {
 
 export const animatedNumber = (element, duration=500, target) => {
 
-    const start = parseInt(element.textContent) || 0;
+    const start = parseInt(element.textContent.replace(/,/g, '')) || 0;
     const end = parseInt(target);
 
     if (start == end) return;
