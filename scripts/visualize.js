@@ -1,6 +1,7 @@
 import { STATE_NAMES, 
         STATE_CODES } from './constants.js' 
 import { fillCircles,
+         sizeLegend,
          animatedNumber } from './drawingUtil.js';
 
 const { select,
@@ -19,8 +20,8 @@ const svg = select(".map");
 
 const svg_style = window.getComputedStyle(svg.node());
 
-const width = parseInt(svg_style.getPropertyValue('width'));
-const height= parseInt(svg_style.getPropertyValue('height'));
+let width = parseInt(svg_style.getPropertyValue('width'));
+let height= parseInt(svg_style.getPropertyValue('height'));
 
 const g = svg.append('g');
 
@@ -91,9 +92,17 @@ Promise.all([
         selection: g,
         features: states.features});
 
+    sizeLegend(g, {
+        sizeScale,
+        width,
+        height,
+        numTicks: 4, 
+        circleFill: colorScale('confirmed')
+    });
+
     const categoryItem = document.querySelectorAll("#category_dropdown li");
 
-    const circles = g.selectAll('circle').data(states.features);
+    const circles = g.selectAll('circle.state-circle').data(states.features);
 
 
     
@@ -141,6 +150,14 @@ Promise.all([
             select('svg.map > g').selectAll('path')
                 .attr('stroke', colorScale(category));
 
+            sizeLegend(g, {
+                sizeScale,
+                width, 
+                height, 
+                numTicks: 4,
+                circleFill: colorScale(category)
+            });
+
             circles
                 .attr('data-category', category)
                 .attr('fill', colorScale(category))
@@ -153,7 +170,6 @@ Promise.all([
 
      // here comes the observer API
      new ResizeObserver(entries => {
-        let width, height;
         for (let entry of entries) {
             if (entry.contentBoxSize[0]) {
                 width = entry.contentBoxSize[0].inlineSize;
@@ -193,7 +209,7 @@ Promise.all([
                 // dropdown selection
 
                 select(entry.target)
-                    .selectAll('circle')
+                    .selectAll('circle.state-circle')
                     .data(states.features)
                     .attr('cx', d => d.properties.centroid[0])
                     .attr('cy', d => d.properties.centroid[1])
@@ -201,6 +217,17 @@ Promise.all([
                         covid_data[STATE_CODES[d.id]][elem[i]
                         .getAttribute('data-category')]
                     ));
+
+                let selectedCategory = document.querySelector('#category_dropdown .dropdown__item-selected');
+                let category = selectedCategory.dataset.category;
+
+                sizeLegend(g, {
+                    sizeScale,
+                    width, 
+                    height, 
+                    numTicks: 4,
+                    circleFill: colorScale(category)
+                });
             })();
         }
      }).observe(svg.node());
