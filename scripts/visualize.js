@@ -40,7 +40,7 @@ export let covid_data = {};
 
 Promise.all([
     json('static/india.json'),
-    json('static/data.min.json')
+    Promise.resolve(json('https://data.incovid19.org/v4/min/data.min.json').catch(err => json('static/data.min.json')))
 ]).then(function([country, raw_data]) {
 
     Object.entries(raw_data).forEach(([st_code, st_data], i) => {
